@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Products Gallery Page</title>
+</head>
+<body>
+
+    <h1>Catalog</h1>
+    <hr/>
+    <div class="text-center">
+        <ol>
+            <li th:each="flower : ${catalog}">
+                <span th:text="${flower.title}"></span>
+            </li>
+        </ol>
+    </div>
+    <hr/>
+
+</body>
+</html>
