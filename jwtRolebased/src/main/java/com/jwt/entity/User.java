@@ -6,61 +6,78 @@ import java.util.Set;
 @Entity
 public class User {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     private String userName;
     private String userFirstName;
     private String userLastName;
     private String userPassword;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_ROLE",
-            joinColumns = {
-                    @JoinColumn(name = "USER_ID")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "ROLE_ID")
-            }
-    )
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     private Set<Role> role;
 
-    public String getUserName() {
-        return userName;
-    }
+	public User() {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.userFirstName = userFirstName;
+		this.userLastName = userLastName;
+		this.userPassword = userPassword;
+		this.role = role;
+	}
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public String getUserFirstName() {
-        return userFirstName;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setUserFirstName(String userFirstName) {
-        this.userFirstName = userFirstName;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public String getUserLastName() {
-        return userLastName;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public void setUserLastName(String userLastName) {
-        this.userLastName = userLastName;
-    }
+	public String getUserFirstName() {
+		return userFirstName;
+	}
 
-    public String getUserPassword() {
-        return userPassword;
-    }
+	public void setUserFirstName(String userFirstName) {
+		this.userFirstName = userFirstName;
+	}
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
-    }
+	public String getUserLastName() {
+		return userLastName;
+	}
 
-    public Set<Role> getRole() {
-        return role;
-    }
+	public void setUserLastName(String userLastName) {
+		this.userLastName = userLastName;
+	}
 
-    public void setRole(Set<Role> role) {
-        this.role = role;
-    }
+	public String getUserPassword() {
+		return userPassword;
+	}
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
+
+	public Set<Role> getRole() {
+		return role;
+	}
+
+	public void setRole(Set<Role> role) {
+		this.role = role;
+	}
+
+	
 }

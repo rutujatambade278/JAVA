@@ -1,72 +1,47 @@
 package com.jwt.service;
 
+import com.jwt.entity.User;
+import com.jwt.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.jwt.dao.RoleDao;
-import com.jwt.dao.UserDao;
-import com.jwt.entity.Role;
-import com.jwt.entity.User;
-
-import javax.annotation.PostConstruct;
-import java.util.HashSet;
 import java.util.Set;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserDao userDao;
+    private UserDao userRepository;
 
-    @Autowired
-    private RoleDao roleDao;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @PostConstruct
-    public void initRoleAndUser() {
-        if (!roleDao.existsById("Admin")) {
-            Role adminRole = new Role();
-            adminRole.setRoleName("Admin");
-            adminRole.setRoleDescription("Admin role");
-            roleDao.save(adminRole);
-        }
-
-        if (!roleDao.existsById("User")) {
-            Role userRole = new Role();
-            userRole.setRoleName("User");
-            userRole.setRoleDescription("Default role for newly created record");
-            roleDao.save(userRole);
-        }
-
-        if (!userDao.existsById("admin123")) {
-            User adminUser = new User();
-            adminUser.setUserName("admin123");
-            adminUser.setUserPassword(getEncodedPassword("admin@pass"));
-            adminUser.setUserFirstName("admin");
-            adminUser.setUserLastName("admin");
-            Set<Role> adminRoles = new HashSet<>();
-            adminRoles.add(roleDao.findById("Admin").orElseThrow(() -> new RuntimeException("Admin role not found")));
-            adminUser.setRole(adminRoles);
-            userDao.save(adminUser);
-        }
+    public User createUser(User user) {
+        return userRepository.save(user); // Save the new user to the database
     }
 
-    public String getEncodedPassword(String password) {
-        return passwordEncoder.encode(password);
+    public Set<User> getAllUsers() {
+        return (Set<User>) userRepository.findAll(); // Retrieve all users from the database
     }
 
-    public User registerNewUser(User user) {
-        if (userDao.existsById(user.getUserName())) {
-            throw new RuntimeException("User already exists with username: " + user.getUserName());
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null); // Retrieve user by ID
+    }
+
+    public User updateUser(Long id, User user) {
+        if (userRepository.existsById(id)) {
+            user.setId(id); // Make sure we update the user with the correct ID
+            return userRepository.save(user); // Save the updated user to the database
         }
-        Role userRole = roleDao.findById("User").orElseThrow(() -> new RuntimeException("Default role not found"));
-        Set<Role> roles = new HashSet<>();
-        roles.add(userRole);
-        user.setRole(roles);
-        user.setUserPassword(getEncodedPassword(user.getUserPassword()));
-        return userDao.save(user);
+        return null;
+    }
+
+    public boolean deleteUser(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id); // Delete the user from the database
+            return true;
+        }
+        return false;
+    }
+    public void saveUser(User user) {
+        // Save user to the database
+        userRepository.save(user);
     }
 }

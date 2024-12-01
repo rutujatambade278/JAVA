@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delete User</title>
+</head>
+<body>
+    <h1>Confirm Delete</h1>
+    <p>Are you sure you want to delete the following user?</p>
+
+    <table>
+        <tr>
+            <td>Username:</td>
+            <td th:text="${user.userName}"></td>
+        </tr>
+        <tr>
+            <td>First Name:</td>
+            <td th:text="${user.userFirstName}"></td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td th:text="${user.userLastName}"></td>
+        </tr>
+        <tr>
+            <td>Role:</td>
+            <td th:text="${user.role}"></td>
+        </tr>
+    </table>
+
+    <form th:action="@{'/api/users/' + ${user.id} + '/delete'}" method="post">
+        <button type="submit">Confirm Delete</button>
+    </form>
+    <a th:href="@{/api/users}">Cancel</a>
+</body>
+</html>

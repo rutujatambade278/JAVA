@@ -2,13 +2,11 @@ package com.jwt.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.jwt.dao.RoleDao;
 import com.jwt.entity.Role;
 
 @Service
 public class RoleService {
-
     @Autowired
     private RoleDao roleDao;
 

@@ -1,35 +1,70 @@
 package com.jwt.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Role {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int roleId;
     private String roleName;
     private String roleDescription;
 
-    public String getRoleName() {
-        return roleName;
-    }
+//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "role_id")
+//    private Set<Permission> permissions;
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
+	public Role() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 
-    public String getRoleDescription() {
-        return roleDescription;
-    }
+	public Role(int roleId, String roleName, String roleDescription
+	//		,Set<Permission> permissions
+			) {
+		super();
+		this.roleId = roleId;
+		this.roleName = roleName;
+		this.roleDescription = roleDescription;
+		//this.permissions = permissions;
+	}
 
-    public void setRoleDescription(String roleDescription) {
-        this.roleDescription = roleDescription;
-    }
+
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public String getRoleDescription() {
+		return roleDescription;
+	}
+
+	public void setRoleDescription(String roleDescription) {
+		this.roleDescription = roleDescription;
+	}
+//
+//	public Set<Permission> getPermissions() {
+//		return permissions;
+//	}
+//
+//	public void setPermissions(Set<Permission> permissions) {
+//		this.permissions = permissions;
+//	}
+
+    
+    
+    
 }
