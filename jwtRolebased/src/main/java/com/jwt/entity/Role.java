@@ -1,70 +1,70 @@
 package com.jwt.entity;
 
-import javax.persistence.*;
+import java.security.Permission;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+//Role.java
 @Entity
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int roleId;
-    private String roleName;
-    private String roleDescription;
+ public class Role {
+ @Id
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
+ private Long id;
+ private String roleName;
 
-//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "role_id")
-//    private Set<Permission> permissions;
+ @ManyToMany
+ @JoinTable(
+   name = "role_permission", 
+   joinColumns = @JoinColumn(name = "role_id"), 
+   inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    private Set<Permission> permissions;
 
-	public Role() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-
-	public Role(int roleId, String roleName, String roleDescription
-	//		,Set<Permission> permissions
-			) {
-		super();
-		this.roleId = roleId;
-		this.roleName = roleName;
-		this.roleDescription = roleDescription;
-		//this.permissions = permissions;
-	}
+ 
+ public Role(Long id, String roleName, Set<Permission> permissions) {
+	super();
+	this.id = id;
+	this.roleName = roleName;
+	this.permissions = permissions;
+}
 
 
-	public int getRoleId() {
-		return roleId;
-	}
+public Long getId() {
+	return id;
+}
 
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
-	}
 
-	public String getRoleName() {
-		return roleName;
-	}
+public void setId(Long id) {
+	this.id = id;
+}
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
 
-	public String getRoleDescription() {
-		return roleDescription;
-	}
+public String getRoleName() {
+	return roleName;
+}
 
-	public void setRoleDescription(String roleDescription) {
-		this.roleDescription = roleDescription;
-	}
-//
-//	public Set<Permission> getPermissions() {
-//		return permissions;
-//	}
-//
-//	public void setPermissions(Set<Permission> permissions) {
-//		this.permissions = permissions;
-//	}
 
-    
-    
-    
+public void setRoleName(String roleName) {
+	this.roleName = roleName;
+}
+
+
+public Set<Permission> getPermissions() {
+	return permissions;
+}
+
+
+public void setPermissions(Set<Permission> permissions) {
+	this.permissions = permissions;
+}
+
+
+ 
+ 
 }

@@ -21,8 +21,8 @@ public class UserControllerPage {
     // Method to display the form for creating a new user
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User()); // Adding a new empty user object to the model
-        return "createUserForm"; // View for the registration form
+        model.addAttribute("user", new User()); 
+        return "createUserForm"; 
     }
 
     // Method to handle user creation form submission
@@ -31,10 +31,10 @@ public class UserControllerPage {
         try {
             userService.createUser(user); // Save user using service
             model.addAttribute("message", "User created successfully!");
-            return "redirect:/api/users/success"; // Redirect to success page
+            return "redirect:/api/users/success"; 
         } catch (Exception e) {
             model.addAttribute("error", "Error creating user.");
-            return "userError"; // Return the error page if there is an error
+            return "userError"; 
         }
     }
 
